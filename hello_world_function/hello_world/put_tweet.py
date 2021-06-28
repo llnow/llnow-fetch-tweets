@@ -1,2 +1,2 @@
-def put_tweet(tweets):
+def put_tweet(tweets, THRESHOLD):
     pass
