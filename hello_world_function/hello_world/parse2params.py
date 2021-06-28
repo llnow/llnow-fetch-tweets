@@ -6,4 +6,5 @@ def parse2params(parse_str, parse=None):
     for param_string in parsed_str:
         param, value = param_string.split('=', 1)
         return_params[param] = value
+
     return return_params
