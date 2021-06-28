@@ -5,7 +5,7 @@ import boto3
 BUCKET_NAME = 'll-now-material'
 
 
-def fetch_new_tweet(twitter):
+def fetch_new_tweets(twitter):
     s3 = boto3.resource('s3')
     bucket = s3.Bucket(BUCKET_NAME)
 

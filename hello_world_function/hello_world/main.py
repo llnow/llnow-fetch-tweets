@@ -1,7 +1,7 @@
-from fetch_stored_tweet import *
-from fetch_new_tweet import *
-from merge_tweet import *
-from put_tweet import *
+from fetch_stored_tweets import *
+from fetch_new_tweets import *
+from merge_tweets import *
+from put_tweets import *
 from requests_oauthlib import OAuth1Session
 import os
 
@@ -16,7 +16,7 @@ twitter = OAuth1Session(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKE
 
 
 def main(event, context):
-    stored_tweets = fetch_stored_tweet()
-    new_tweets = fetch_new_tweet(twitter)
-    tweets = merge_tweet(stored_tweets, new_tweets)
-    put_tweet(tweets, THRESHOLD)
+    stored_tweets = fetch_stored_tweets()
+    new_tweets = fetch_new_tweets(twitter)
+    tweets = merge_tweets(stored_tweets, new_tweets)
+    put_tweets(tweets, THRESHOLD)
