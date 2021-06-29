@@ -9,12 +9,12 @@ BUCKET_KEY = 'stored_tweets.json'
 def fetch_stored_tweets():
     s3 = boto3.resource('s3')
     bucket = s3.Bucket(BUCKET_NAME)
+    obj = bucket.Object(BUCKET_KEY)
     try:
-        obj = bucket.Object(BUCKET_KEY)
+        response = obj.get()
     except ClientError:
-        # stored_tweets.jsonがs3に存在しない
+        # stored_tweets.jsonがs3に存在しない場合
         return None
-    response = obj.get()
     body = response['Body'].read()
     tweets = json.loads(body.decode('utf-8'))
 
