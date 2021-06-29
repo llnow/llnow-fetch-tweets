@@ -58,7 +58,7 @@ def fetch_new_tweets(twitter):
 
     # since_idを更新
     updated_since_id = latest_tweet['id_str']
-    obj = s3.Object(BUCKET_NAME, text_path)
+    obj = s3.Object(BUCKET_NAME, 'tmp/since_id.txt')
     obj.put(Body=updated_since_id)
 
     # res = twitter.get(url_search, params=params)
