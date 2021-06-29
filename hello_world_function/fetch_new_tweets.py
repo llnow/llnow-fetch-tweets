@@ -50,16 +50,20 @@ def fetch_new_tweets(twitter):
         params['q'] = '#lovelive -filter:retweets'
         params['since_id'] = since_id
 
-    latest_tweet = tweets[0]
-    oldest_tweet = tweets[-1]
-    latest_tweet_created_at = posted_time_utc2jst(latest_tweet['created_at'])
-    oldest_tweet_created_at = posted_time_utc2jst(oldest_tweet['created_at'])
+    if len(tweets) == 0:
+        latest_tweet = None
+    else:
+        latest_tweet = tweets[0]
+    # oldest_tweet = tweets[-1]
+    # latest_tweet_created_at = posted_time_utc2jst(latest_tweet['created_at'])
+    # oldest_tweet_created_at = posted_time_utc2jst(oldest_tweet['created_at'])
     n_fetched_tweets = len(tweets)
 
     # since_idを更新
-    updated_since_id = latest_tweet['id_str']
-    obj = s3.Object(BUCKET_NAME, 'tmp/since_id.txt')
-    obj.put(Body=updated_since_id)
+    if latest_tweet is not None:
+        updated_since_id = latest_tweet['id_str']
+        obj = s3.Object(BUCKET_NAME, 'tmp/since_id.txt')
+        obj.put(Body=updated_since_id)
 
     # res = twitter.get(url_search, params=params)
     # contents = res.json()
@@ -70,4 +74,5 @@ def fetch_new_tweets(twitter):
     # latest_tweet_created_at = posted_time_utc2jst(latest_tweet['created_at'])
     # oldest_tweet_created_at = posted_time_utc2jst(oldest_tweet['created_at'])
 
-    return tweets, n_fetched_tweets, latest_tweet_created_at, oldest_tweet_created_at
+    # return tweets, n_fetched_tweets, latest_tweet_created_at, oldest_tweet_created_at
+    return tweets
