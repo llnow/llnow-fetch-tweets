@@ -3,7 +3,7 @@ from botocore.exceptions import ClientError
 import json
 
 BUCKET_NAME = 'll-now-material'
-BUCKET_KEY = 'stored_tweets.json'
+BUCKET_KEY = 'tmp/stored_tweets.json'
 
 
 def fetch_stored_tweets():
