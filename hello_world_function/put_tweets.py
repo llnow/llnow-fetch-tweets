@@ -9,7 +9,7 @@ def put_tweets(tweets, THRESHOLD):
     bucket = s3.Bucket(BUCKET_NAME)
     tweets_path = '/tmp/tweets.json'
     with open(tweets_path, 'w') as f:
-        json.dump(tweets, f, indent=4)
+        json.dump(tweets, f, indent=4, ensure_ascii=False)
     # ready_tweetsとしてs3に格納
     if len(tweets) >= THRESHOLD:
         # アップロード(上書き)
