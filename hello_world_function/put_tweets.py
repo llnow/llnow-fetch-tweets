@@ -5,7 +5,7 @@ import json
 BUCKET_NAME = 'll-now-material'
 
 
-def put_tweets(tweets, THRESHOLD):
+def put_tweets(tweets, N_REQUIRED_TWEETS):
     s3 = boto3.resource('s3')
     s3_client = boto3.client('s3')  # s3のファイル削除用
     bucket = s3.Bucket(BUCKET_NAME)
@@ -13,7 +13,7 @@ def put_tweets(tweets, THRESHOLD):
     with open(tweets_path, 'w') as f:
         json.dump(tweets, f, indent=4, ensure_ascii=False)
     # 取得ツイート数が十分な場合
-    if len(tweets) >= THRESHOLD:
+    if len(tweets) >= N_REQUIRED_TWEETS:
         # 不要なstored_tweetsを削除
         try:
             s3_client.delete_object(Bucket=BUCKET_NAME, Key='tmp/stored_tweets.json')
