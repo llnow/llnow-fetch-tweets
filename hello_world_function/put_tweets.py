@@ -1,4 +1,5 @@
 import boto3
+from botocore.exceptions import ClientError
 import json
 
 BUCKET_NAME = 'll-now-material'
@@ -14,7 +15,11 @@ def put_tweets(tweets, THRESHOLD):
     # 取得ツイート数が十分な場合
     if len(tweets) >= THRESHOLD:
         # 不要なstored_tweetsを削除
-        s3_client.delete_object(Bucket=BUCKET_NAME, Key='tmp/stored_tweets.json')
+        try:
+            s3_client.delete_object(Bucket=BUCKET_NAME, Key='tmp/stored_tweets.json')
+        except ClientError:
+            # stored_tweets.jsonがs3に存在しない場合は何もしない
+            pass
         # ready_tweetsとしてs3に格納(次の処理のトリガー)
         bucket.upload_file(tweets_path, 'tmp/ready_tweets.json')
     # 取得ツイート数が不十分な場合
