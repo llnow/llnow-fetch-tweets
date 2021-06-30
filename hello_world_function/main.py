@@ -10,7 +10,7 @@ CONSUMER_KEY = os.environ['CONSUMER_KEY']
 CONSUMER_SECRET = os.environ['CONSUMER_SECRET']
 ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
 ACCESS_TOKEN_SECRET = os.environ['ACCESS_TOKEN_SECRET']
-N_REQUIRED_TWEETS = os.environ['N_REQUIRED_TWEETS']  # WordCloudを生成するために必要なツイート数
+N_REQUIRED_TWEETS = int(os.environ['N_REQUIRED_TWEETS'])  # WordCloudを生成するために必要なツイート数
 
 twitter = OAuth1Session(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
