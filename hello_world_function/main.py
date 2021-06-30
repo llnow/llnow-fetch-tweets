@@ -19,4 +19,4 @@ def main(event, context):
     stored_tweets = fetch_stored_tweets()
     new_tweets = fetch_new_tweets(twitter)
     tweets = merge_tweets(stored_tweets, new_tweets)
-    put_tweets(tweets, THRESHOLD)
+    put_tweets(tweets, N_REQUIRED_TWEETS)
