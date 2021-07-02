@@ -20,7 +20,7 @@ def fetch_new_tweets(twitter):
     url_search = 'https://api.twitter.com/1.1/search/tweets.json'
     url_limit = 'https://api.twitter.com/1.1/application/rate_limit_status.json'
     params = {
-        'q': '#lovelive -filter:retweets',
+        'q': '#lovelive -filter:retweets -filter:replies',
         'lang': 'ja',
         'result_type': 'recent',
         'count': 100,
@@ -47,7 +47,7 @@ def fetch_new_tweets(twitter):
         next_results = next_results.lstrip('?')  # 先頭の?を削除
         params = parse2params(next_results)
         # 崩れるので上書き
-        params['q'] = '#lovelive -filter:retweets'
+        params['q'] = '#lovelive -filter:retweets -filter:replies'
         params['since_id'] = since_id
 
     if len(tweets) == 0:
