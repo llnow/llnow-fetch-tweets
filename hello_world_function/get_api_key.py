@@ -57,4 +57,5 @@ def get_api_key():
             secret = base64.b64decode(get_secret_value_response['SecretBinary'])
 
     api_key = ast.literal_eval(secret)
+
     return api_key
