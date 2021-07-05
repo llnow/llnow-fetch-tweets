@@ -1,6 +1,5 @@
 from check_valid_tweet import *
 from parse2params import *
-from posted_time_utc2jst import *
 import boto3
 
 BUCKET_NAME = 'll-now-material'
@@ -56,10 +55,6 @@ def fetch_new_tweets(twitter):
         latest_tweet = None
     else:
         latest_tweet = tweets[0]
-    # oldest_tweet = tweets[-1]
-    # latest_tweet_created_at = posted_time_utc2jst(latest_tweet['created_at'])
-    # oldest_tweet_created_at = posted_time_utc2jst(oldest_tweet['created_at'])
-    n_fetched_tweets = len(tweets)
 
     # since_idを更新
     if latest_tweet is not None:
@@ -67,14 +62,4 @@ def fetch_new_tweets(twitter):
         obj = s3.Object(BUCKET_NAME, 'tmp/since_id.txt')
         obj.put(Body=updated_since_id)
 
-    # res = twitter.get(url_search, params=params)
-    # contents = res.json()
-    # tweets = contents['statuses']
-    #
-    # latest_tweet = contents['statuses'][0]
-    # oldest_tweet = contents['statuses'][-1]
-    # latest_tweet_created_at = posted_time_utc2jst(latest_tweet['created_at'])
-    # oldest_tweet_created_at = posted_time_utc2jst(oldest_tweet['created_at'])
-
-    # return tweets, n_fetched_tweets, latest_tweet_created_at, oldest_tweet_created_at
     return tweets
