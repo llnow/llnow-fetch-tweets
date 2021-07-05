@@ -1,3 +1,4 @@
+from check_valid_tweet import *
 from parse2params import *
 from posted_time_utc2jst import *
 import boto3
@@ -40,7 +41,8 @@ def fetch_new_tweets(twitter):
         if len(fetched_tweets) == 0:
             break
         for tweet in fetched_tweets:
-            tweets.append(tweet)
+            if check_valid_tweet(tweet):
+                tweets.append(tweet)
         search_metadata = contents['search_metadata']
         next_results = search_metadata['next_results']
         since_id = search_metadata['since_id']
