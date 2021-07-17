@@ -2,9 +2,10 @@ from get_since_id import *
 from check_valid_tweet import *
 from parse2params import *
 from update_since_id import *
+import time
 
 
-def fetch_new_tweets(twitter):
+def fetch_new_tweets(twitter, sleep_sec, max_api_request_force):
     # dynamodbからsince_idを取得
     since_id = get_since_id()
 
@@ -19,12 +20,18 @@ def fetch_new_tweets(twitter):
     }
     res = twitter.get(url_limit)
     contents = res.json()
-    max_api_request = contents['resources']['search']['/search/tweets']['remaining']
-    print('max_api_request: ' + str(max_api_request))
+    max_api_request_real = contents['resources']['search']['/search/tweets']['remaining']
+    print('max_api_request: ' + str(max_api_request_real))
+    # 手動で定めた上限と実際の上限の小さい方を採用
+    max_api_request = min(max_api_request_real, max_api_request_force)
+
     tweets = []
     for req in range(max_api_request):
         if req != 0 and req % 10 == 0:
             print('{} requested'.format(req))
+            # リクエストの間隔を空けるために10回ごとにスリープ
+            time.sleep(sleep_sec)
+
         res = twitter.get(url_search, params=params)
         contents = res.json()
         fetched_tweets = contents['statuses']
