@@ -3,11 +3,24 @@ from check_valid_tweet import *
 from parse2params import *
 from update_since_id import *
 import time
+import boto3
 
 
 def fetch_new_tweets(twitter, sleep_sec, max_api_request_force):
     # dynamodbからsince_idを取得
     since_id = get_since_id()
+
+    table = boto3.resource('dynamodb').Table('ll_now')
+
+    # 無効なツイートを見分けるための単語リストをDynamoDBから取得
+    primary_key = {"primary": 'invalid_tweet_including'}
+    res = table.get_item(Key=primary_key)
+    invalid_tweet_including = res['Item']['word']
+
+    # 無効なツイートソースのリストをDynamoDBから取得
+    primary_key = {"primary": 'invalid_source_list'}
+    res = table.get_item(Key=primary_key)
+    invalid_source_list = res['Item']['source']
 
     url_search = 'https://api.twitter.com/1.1/search/tweets.json'
     url_limit = 'https://api.twitter.com/1.1/application/rate_limit_status.json'
@@ -38,7 +51,7 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force):
         if len(fetched_tweets) == 0:
             break
         for tweet in fetched_tweets:
-            if check_valid_tweet(tweet):
+            if check_valid_tweet(tweet, invalid_tweet_including, invalid_source_list):
                 tweets.append(tweet)
         search_metadata = contents['search_metadata']
         next_results = search_metadata['next_results']
