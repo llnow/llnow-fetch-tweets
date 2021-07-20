@@ -1,4 +1,5 @@
 from get_since_id import *
+from get_query import *
 from check_valid_tweet import *
 from parse2params import *
 from update_since_id import *
@@ -22,10 +23,13 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force):
     res = table.get_item(Key=primary_key)
     invalid_source_list = res['Item']['source']
 
+    # クエリを取得
+    query = get_query()
+
     url_search = 'https://api.twitter.com/1.1/search/tweets.json'
     url_limit = 'https://api.twitter.com/1.1/application/rate_limit_status.json'
     params = {
-        'q': '#lovelive -filter:retweets -filter:replies -from:LLNow_jp',
+        'q': query,
         'lang': 'ja',
         'result_type': 'recent',
         'count': 100,
@@ -59,7 +63,7 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force):
         next_results = next_results.lstrip('?')  # 先頭の?を削除
         params = parse2params(next_results)
         # 崩れるので上書き
-        params['q'] = '#lovelive -filter:retweets -filter:replies -from:LLNow_jp'
+        params['q'] = query
         params['since_id'] = since_id
 
     if len(tweets) == 0:
