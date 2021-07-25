@@ -4,6 +4,8 @@ def summarize_tweet(tweet):
     tweet_abst['id'] = tweet['id']
     tweet_abst['id_str'] = tweet['id_str']
     tweet_abst['text'] = tweet['text']
-    tweet_abst['entities'] = tweet['entities']
+    tweet_abst['entities'] = {}
+    tweet_abst['entities']['hashtags'] = tweet['entities']['hashtags']
+    tweet_abst['entities']['urls'] = tweet['entities']['urls']
 
     return tweet_abst
