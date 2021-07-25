@@ -1,6 +1,7 @@
 from get_since_id import *
 from get_query import *
 from check_valid_tweet import *
+from summarize_tweet import *
 from parse2params import *
 from update_since_id import *
 import time
@@ -56,6 +57,7 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force):
             break
         for tweet in fetched_tweets:
             if check_valid_tweet(tweet, invalid_tweet_including, invalid_source_list):
+                tweet = summarize_tweet(tweet)
                 tweets.append(tweet)
         search_metadata = contents['search_metadata']
         next_results = search_metadata['next_results']
