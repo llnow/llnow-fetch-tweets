@@ -3,7 +3,9 @@ Twitter BOT [LL Now](https://twitter.com/LLNow_jp) のツイート取得部分
 
 ## About LL Now
 
-https://twitter.com/llnow_jp/status/1413806607419416577
+[comment]: <> (<blockquote class="twitter-tweet"><a href="https://twitter.com/llnow_jp/status/1413806607419416577"></a></blockquote>)
+
+[comment]: <> (https://twitter.com/llnow_jp/status/1413806607419416577)
 
 ```#lovelive```を含む日本語ツイートを収集・可視化するTwitter BOT
 
