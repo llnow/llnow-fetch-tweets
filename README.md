@@ -16,4 +16,4 @@ Twitter BOT [LL Now](https://twitter.com/LLNow_jp) のツイート取得部分
 * [ll-now-post-tweet](https://github.com/sy-app/ll-now-post-tweet)
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://github.com/sy-app/ll-now-fetch-tweet/blob/master/LICENSE)
