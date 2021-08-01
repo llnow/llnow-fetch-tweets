@@ -6,8 +6,10 @@ def check_valid_tweet(tweet, invalid_tweet_including, invalid_source_list):
     source = tweet['source']
     hashtags = tweet['entities']['hashtags']
 
+    # テキストをチェック
     flag_valid_text = not (any(map(text.__contains__, invalid_tweet_including)))
 
+    # ツイートソースをチェック
     flag_valid_source = True
     pattern = r'<a href="(.*)">(.*)</a>'
     matches = re.finditer(pattern, source)
