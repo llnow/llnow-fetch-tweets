@@ -20,7 +20,7 @@ def check_valid_tweet(tweet, invalid_tweet_including, invalid_source_list):
 
     # ハッシュタグの数が閾値より多いツイートを無効とみなす
     n_hashtags = len(hashtags)
-    if n_hashtags < 8:
+    if n_hashtags <= 7:
         flag_valid_hashtags = True
     else:
         flag_valid_hashtags = False
