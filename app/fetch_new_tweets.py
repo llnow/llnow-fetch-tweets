@@ -33,7 +33,8 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force):
         'lang': 'ja',
         'result_type': 'recent',
         'count': 100,
-        'since_id': since_id
+        'since_id': since_id,
+        'max_id': None
     }
 
     max_api_request_real = get_api_req_limit()
@@ -53,17 +54,17 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force):
             lang=params['lang'],
             result_type=params['result_type'],
             count=params['count'],
-            since_id=params['since_id']
+            since_id=params['since_id'],
+            max_id=params['max_id']
         )
-        contents = res.json()
-        fetched_tweets = contents['statuses']
+        fetched_tweets = res['statuses']
         if len(fetched_tweets) == 0:
             break
         for tweet in fetched_tweets:
             if check_valid_tweet(tweet, invalid_tweet_including, invalid_source_list):
                 tweet = summarize_tweet(tweet)
                 tweets.append(tweet)
-        search_metadata = contents['search_metadata']
+        search_metadata = res['search_metadata']
         next_results = search_metadata['next_results']
         since_id = search_metadata['since_id']
         next_results = next_results.lstrip('?')  # 先頭の?を削除
