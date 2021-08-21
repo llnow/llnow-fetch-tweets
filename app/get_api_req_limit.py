@@ -6,7 +6,7 @@ def get_api_req_limit():
     user_agent = "Get Twitter Status Application/1.0"
     limit_endpoint = 'https://api.twitter.com/1.1/application/rate_limit_status.json'
     api_key = get_api_key()
-    bearer = api_key['bearer_token']
+    bearer = api_key['BEARER_TOKEN']
 
     headers = {
         'Authorization': 'Bearer {}'.format(bearer),
