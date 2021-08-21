@@ -5,17 +5,17 @@ from check_datetime_in_range import *
 
 def get_query():
     table_ll_now = boto3.resource('dynamodb').Table('ll_now')
-    talbe_ll_now_search_keyword = boto3.resource('dynamodb').Table('ll-now-search-keyword')
+    table_ll_now_search_keyword = boto3.resource('dynamodb').Table('ll-now-search-keyword')
 
     # 検索キーワードを取得
     # default_keywordsを取得
-    res = talbe_ll_now_search_keyword.query(
+    res = table_ll_now_search_keyword.query(
         KeyConditionExpression=Key('type').eq('default')
     )
     default_keywords = [d['keyword'] for d in res['Items']]
 
     # option_keywordsを取得
-    res = talbe_ll_now_search_keyword.query(
+    res = table_ll_now_search_keyword.query(
         KeyConditionExpression=Key('type').eq('option')
     )
     option_keywords = []
