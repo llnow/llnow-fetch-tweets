@@ -1,5 +1,6 @@
 from get_since_id import *
 from get_query import *
+from get_api_req_limit import *
 from check_valid_tweet import *
 from summarize_tweet import *
 from parse2params import *
@@ -27,8 +28,6 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force):
     # クエリを取得
     query = get_query()
 
-    url_search = 'https://api.twitter.com/1.1/search/tweets.json'
-    url_limit = 'https://api.twitter.com/1.1/application/rate_limit_status.json'
     params = {
         'q': query,
         'lang': 'ja',
@@ -36,9 +35,8 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force):
         'count': 100,
         'since_id': since_id
     }
-    res = twitter.get(url_limit)
-    contents = res.json()
-    max_api_request_real = contents['resources']['search']['/search/tweets']['remaining']
+
+    max_api_request_real = get_api_req_limit()
     print('max_api_request: ' + str(max_api_request_real))
     # 手動で定めた上限と実際の上限の小さい方を採用
     max_api_request = min(max_api_request_real, max_api_request_force)
@@ -50,7 +48,13 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force):
             # リクエストの間隔を空けるために10回ごとにスリープ
             time.sleep(sleep_sec)
 
-        res = twitter.get(url_search, params=params)
+        res = twitter.search.tweets(
+            q=params['q'],
+            lang=params['lang'],
+            result_type=params['result_type'],
+            count=params['count'],
+            since_id=params['since_id']
+        )
         contents = res.json()
         fetched_tweets = contents['statuses']
         if len(fetched_tweets) == 0:

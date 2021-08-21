@@ -1,14 +1,13 @@
 from get_api_key import *
-from requests_oauthlib import OAuth1Session
+from twitter import *
 
 
 def set_twitter():
     api_key = get_api_key()
-    twitter = OAuth1Session(
-        api_key['CONSUMER_KEY'],
-        api_key['CONSUMER_SECRET'],
-        api_key['ACCESS_TOKEN'],
-        api_key['ACCESS_TOKEN_SECRET']
+    twitter = Twitter(
+        auth=OAuth2(
+            bearer_token=api_key['BEARER_TOKEN']
+        )
     )
 
     return twitter
