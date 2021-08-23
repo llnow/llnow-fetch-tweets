@@ -20,6 +20,11 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force):
     res = table.get_item(Key=primary_key)
     invalid_tweet_including = res['Item']['word']
 
+    # 除外したいユーザを取得
+    primary_key = {'primary': 'invalid_user_list'}
+    res = table.get_item(Key=primary_key)
+    invalid_users = res['Item']['user']
+
     # 無効なツイートソースのリストをDynamoDBから取得
     primary_key = {"primary": 'invalid_source_list'}
     res = table.get_item(Key=primary_key)
@@ -61,7 +66,7 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force):
         if len(fetched_tweets) == 0:
             break
         for tweet in fetched_tweets:
-            if check_valid_tweet(tweet, invalid_tweet_including, invalid_source_list):
+            if check_valid_tweet(tweet, invalid_tweet_including, invalid_users, invalid_source_list):
                 tweet = summarize_tweet(tweet)
                 tweets.append(tweet)
         search_metadata = res['search_metadata']

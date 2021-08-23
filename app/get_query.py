@@ -35,16 +35,9 @@ def get_query():
     res = table_ll_now.get_item(Key=primary_key)
     filters = res['Item']['filter']
 
-    # 除外したいユーザを取得
-    primary_key = {'primary': 'invalid_user_list'}
-    res = table_ll_now.get_item(Key=primary_key)
-    users = res['Item']['user']
-
     # queryを生成
     query = ' OR '.join(keywords)
     for f in filters:
         query += ' -filter:' + f
-    for user in users:
-        query += ' -from:' + user
 
     return query
