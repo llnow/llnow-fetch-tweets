@@ -7,5 +7,9 @@ def summarize_tweet(tweet):
     tweet_abst['entities'] = {}
     tweet_abst['entities']['hashtags'] = tweet['entities']['hashtags']
     tweet_abst['entities']['urls'] = tweet['entities']['urls']
+    tweet_abst['user'] = {}
+    tweet_abst['user']['id'] = tweet['user']['id']
+    tweet_abst['user']['name'] = tweet['user']['name']
+    tweet_abst['user']['screen_name'] = tweet['user']['screen_name']
 
     return tweet_abst
