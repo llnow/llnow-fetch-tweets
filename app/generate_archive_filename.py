@@ -6,7 +6,7 @@ import pytz
 def generate_archive_filename(tweets):
     until = utc2jst(tweets[0]['created_at'])
     since = utc2jst(tweets[-1]['created_at'])
-    filename = 'tweets_{}_{}.json'.format(since, until)
+    filename = 'archive-tweets-{}-{}.json'.format(since, until)
 
     return filename
 
@@ -20,6 +20,6 @@ def utc2jst(utc):
     # 日本時間に変換
     jst_time = utc_time.astimezone(pytz.timezone("Asia/Tokyo"))
     # フォーマットを変換
-    jst_time_str = jst_time.strftime("%Y%m%d%H%M%S")
+    jst_time_str = jst_time.strftime("%Y%m%d_%H%M%S")
 
     return jst_time_str
