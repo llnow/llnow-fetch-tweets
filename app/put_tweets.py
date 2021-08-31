@@ -26,7 +26,7 @@ def put_tweets(tweets, N_REQUIRED_TWEETS):
         filename = generate_archive_filename(tweets)
         bucket.upload_file(tweets_path, 'archive/{}'.format(filename))
 
-        # ready_tweetsとしてs3に格納(次の処理のトリガー)
+        # 次の処理のトリガーとしてs3に格納
         bucket.upload_file(tweets_path, 'tmp/ready_tweets.json')
 
     # 取得ツイート数が不十分な場合
