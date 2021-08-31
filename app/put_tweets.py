@@ -1,6 +1,7 @@
 import boto3
 from botocore.exceptions import ClientError
 import json
+from generate_archive_filename import *
 
 BUCKET_NAME = 'll-now-material'
 
@@ -20,8 +21,14 @@ def put_tweets(tweets, N_REQUIRED_TWEETS):
         except ClientError:
             # stored_tweets.jsonがs3に存在しない場合は何もしない
             pass
+
+        # ツイートをアーカイブとしてs3に格納
+        filename = generate_archive_filename(tweets)
+        bucket.upload_file(tweets_path, 'archive/{}'.format(filename))
+
         # ready_tweetsとしてs3に格納(次の処理のトリガー)
         bucket.upload_file(tweets_path, 'tmp/ready_tweets.json')
+
     # 取得ツイート数が不十分な場合
     else:
         # stored_tweetsとしてs3に格納
