@@ -2,7 +2,7 @@ import re
 
 
 def check_valid_tweet(tweet, invalid_tweet_including, invalid_users, invalid_source_list):
-    text = tweet['text']
+    text = tweet['full_text']
     user = tweet['user']['screen_name']
     source = tweet['source']
     hashtags = tweet['entities']['hashtags']
