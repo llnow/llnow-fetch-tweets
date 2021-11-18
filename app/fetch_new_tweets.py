@@ -39,7 +39,8 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force):
         'result_type': 'recent',
         'count': 100,
         'since_id': since_id,
-        'max_id': None
+        'max_id': None,
+        'tweet_mode': 'extended'
     }
 
     max_api_request_real = get_api_req_limit()
@@ -60,7 +61,8 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force):
             result_type=params['result_type'],
             count=params['count'],
             since_id=params['since_id'],
-            max_id=params['max_id']
+            max_id=params['max_id'],
+            tweet_mode=params['tweet_mode']
         )
         fetched_tweets = res['statuses']
         if len(fetched_tweets) == 0:
@@ -77,6 +79,8 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force):
         # 崩れるので上書き
         params['q'] = query
         params['since_id'] = since_id
+        # next_resultsにないので追加
+        params['tweet_mode'] = 'extended'
 
     if len(tweets) == 0:
         latest_tweet = None
