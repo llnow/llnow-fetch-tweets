@@ -17,6 +17,6 @@ def main(event, context):
     mode = context.invoked_function_arn.split(':')[-1]
     twitter = set_twitter()
     stored_tweets = fetch_stored_tweets()
-    new_tweets = fetch_new_tweets(twitter, sleep_sec, max_api_request_force)
+    new_tweets = fetch_new_tweets(twitter, sleep_sec, max_api_request_force, mode)
     tweets = merge_tweets(stored_tweets, new_tweets)
     put_tweets(tweets, n_required_tweets, mode)
