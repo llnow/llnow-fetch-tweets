@@ -1,14 +1,29 @@
+import os
 import boto3
 
+region = os.environ['AWS_DEFAULT_REGION']
+ssm = boto3.client('ssm', region)
 
-def get_since_id():
+
+def get_since_id(mode):
+    key = 'll-now-tweet-since-id-{}'.format(mode)
+
     try:
-        table = boto3.resource('dynamodb').Table('ll_now')
-        primary_key = {'primary': 'fetch_tweet_since_id'}
-        res = table.get_item(Key=primary_key)
-        since_id = res['Item']['id']
+        params = get_ssm_params(key)
+        since_id = params[key]
 
         return since_id
 
     except Exception as e:
         print(e)
+
+
+def get_ssm_params(*keys):
+    response = ssm.get_parameters(
+        Names=keys
+    )
+    params = {}
+    for p in response['Parameters']:
+        params[p['Name']] = p['Value']
+
+    return params
