@@ -8,14 +8,10 @@ ssm = boto3.client('ssm', region)
 def get_since_id(mode):
     key = 'll-now-tweet-since-id-{}'.format(mode)
 
-    try:
-        params = get_ssm_params(key)
-        since_id = params[key]
+    params = get_ssm_params(key)
+    since_id = params[key]
 
-        return since_id
-
-    except Exception as e:
-        print(e)
+    return since_id
 
 
 def get_ssm_params(*keys):
