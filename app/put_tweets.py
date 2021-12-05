@@ -14,12 +14,9 @@ upload_tweets_prod_to_dev = strtobool(os.environ['UPLOAD_TWEETS_PROD_TO_DEV'])
 
 
 def put_tweets(tweets, n_required_tweets, mode):
-    if mode == 'dev':
-        put_tweets_to_bucket(tweets, n_required_tweets, mode)
-    if mode == 'prod':
-        if upload_tweets_prod_to_dev:
-            put_tweets_to_bucket(tweets, n_required_tweets, 'dev')
-        put_tweets_to_bucket(tweets, n_required_tweets, mode)
+    put_tweets_to_bucket(tweets, n_required_tweets, mode)
+    if mode == 'prod' and upload_tweets_prod_to_dev:
+        put_tweets_to_bucket(tweets, n_required_tweets, 'dev')
 
 
 def put_tweets_to_bucket(tweets, n_required_tweets, mode):
