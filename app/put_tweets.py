@@ -1,8 +1,8 @@
 import boto3
-import os
-from distutils.util import strtobool
 from botocore.exceptions import ClientError
 import json
+from distutils.util import strtobool
+from get_ssm_params import *
 from generate_archive_filename import *
 
 bucket_name_prod = 'll-now-material'
@@ -10,10 +10,13 @@ bucket_name_dev = 'll-now-material-dev'
 s3 = boto3.resource('s3')
 s3_client = boto3.client('s3')  # s3のファイル削除用
 
-upload_tweets_prod_to_dev = strtobool(os.environ['UPLOAD_TWEETS_PROD_TO_DEV'])
-
 
 def put_tweets(tweets, n_required_tweets, mode):
+    # prodからdevバケットへもツイートをアップロードするかどうかをssmパラメータストアから取得
+    key = 'll-now-upload-tweets-prod-to-dev'
+    params = get_ssm_params(key)
+    upload_tweets_prod_to_dev = strtobool(params[key])
+
     put_tweets_to_bucket(tweets, n_required_tweets, mode)
     if mode == 'prod' and upload_tweets_prod_to_dev:
         put_tweets_to_bucket(tweets, n_required_tweets, 'dev')
