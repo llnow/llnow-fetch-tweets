@@ -19,4 +19,10 @@ def merge_tweets(stored_tweets, new_tweets, n_required_tweets, mode):
     if len(tweets) >= n_required_tweets:
         flag_trigger_next_process = True
 
+    print('{} Tweets are waiting to be processed'.format(len(tweets)))
+    if flag_trigger_next_process:
+        print('Invoked next process')
+    else:
+        print("Didn't invoke next process")
+
     return tweets, flag_trigger_next_process

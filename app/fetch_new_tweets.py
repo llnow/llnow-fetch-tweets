@@ -84,8 +84,10 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force, mode):
 
     if len(tweets) == 0:
         latest_tweet = None
+        print('Fetched 0 new Tweet')
     else:
         latest_tweet = tweets[0]
+        print('Fetched {} new Tweets'.format(len(tweets)))
 
     # since_idを更新
     if latest_tweet is not None:
