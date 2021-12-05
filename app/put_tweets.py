@@ -1,4 +1,6 @@
 import boto3
+import os
+from distutils.util import strtobool
 from botocore.exceptions import ClientError
 import json
 from generate_archive_filename import *
@@ -8,10 +10,15 @@ bucket_name_dev = 'll-now-material-dev'
 s3 = boto3.resource('s3')
 s3_client = boto3.client('s3')  # s3のファイル削除用
 
+upload_tweets_prod_to_dev = strtobool(os.environ['UPLOAD_TWEETS_PROD_TO_DEV'])
+
 
 def put_tweets(tweets, n_required_tweets, mode):
-    put_tweets_to_bucket(tweets, n_required_tweets, 'dev')
+    if mode == 'dev':
+        put_tweets_to_bucket(tweets, n_required_tweets, mode)
     if mode == 'prod':
+        if upload_tweets_prod_to_dev:
+            put_tweets_to_bucket(tweets, n_required_tweets, 'dev')
         put_tweets_to_bucket(tweets, n_required_tweets, mode)
 
 
