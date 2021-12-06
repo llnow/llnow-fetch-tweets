@@ -36,9 +36,9 @@ def put_tweets_to_bucket(tweets, flag_trigger_next_process, mode):
         # 不要なstored_tweetsを削除
         try:
             s3_client.delete_object(Bucket=bucket_name, Key='tmp/stored_tweets.json')
-        except ClientError:
+        except ClientError as e:
             # stored_tweets.jsonがs3に存在しない場合は何もしない
-            pass
+            print(e)
 
         if mode == 'prod':
             # ツイートをアーカイブとしてs3に格納
