@@ -1,11 +1,12 @@
 import json
+from datetime import datetime, timedelta, timezone
 from boto3.dynamodb.conditions import Attr
 from get_ssm_params import *
 
 
-def generate_bd_hashtag(mode):
-    # 日付をssmパラメータストアから取得
-    year, month, day = get_date(mode)
+def generate_bd_hashtag():
+    # 今日の日付を取得
+    year, month, day = get_today()
 
     table = boto3.resource('dynamodb').Table('lovelive-character')
     res = table.scan(
@@ -20,11 +21,8 @@ def generate_bd_hashtag(mode):
     return bd_hashtag
 
 
-def get_date(mode):
-    key = 'll-now-tweets-features-{}'.format(mode)
-    params = get_ssm_params(key)
-    tweets_feature = json.loads(params[key])
-    until = tweets_feature['latest_tweet_created_at']
-    year, month, day = map(int, until.split()[0].split('-'))
+def get_today():
+    jst = timezone(timedelta(hours=+9), 'JST')
+    now = datetime.now(jst)
 
-    return year, month, day
+    return now.year, now.month, now.day
