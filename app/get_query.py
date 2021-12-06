@@ -4,7 +4,7 @@ from check_datetime_in_range import *
 from generate_bd_hashtag import *
 
 
-def get_query(mode):
+def get_query():
     table_ll_now = boto3.resource('dynamodb').Table('ll_now')
     table_ll_now_search_keyword = boto3.resource('dynamodb').Table('ll-now-search-keyword')
 
@@ -29,7 +29,7 @@ def get_query(mode):
             option_keywords.append(kw)
 
     # 生誕祭ハッシュタグを取得
-    bd_hashtag = generate_bd_hashtag(mode)
+    bd_hashtag = generate_bd_hashtag()
 
     keywords = default_keywords + bd_hashtag + option_keywords
     print('keywords:{}'.format(keywords))
