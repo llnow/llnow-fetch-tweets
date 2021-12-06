@@ -31,7 +31,7 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force, mode):
     invalid_source_list = res['Item']['source']
 
     # クエリを取得
-    query = get_query()
+    query = get_query(mode)
 
     params = {
         'q': query,
