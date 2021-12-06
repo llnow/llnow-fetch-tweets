@@ -16,7 +16,7 @@ max_api_request_force = int(os.environ['MAX_API_REQUEST_FORCE'])
 def main(event, context):
     mode = context.invoked_function_arn.split(':')[-1]
     twitter = set_twitter()
-    stored_tweets = fetch_stored_tweets()
+    stored_tweets = fetch_stored_tweets(mode)
     new_tweets = fetch_new_tweets(twitter, sleep_sec, max_api_request_force, mode)
     tweets, flag_trigger_next_process = merge_tweets(stored_tweets, new_tweets, n_required_tweets, mode)
     put_tweets(tweets, flag_trigger_next_process, mode)

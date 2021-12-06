@@ -2,14 +2,19 @@ import boto3
 from botocore.exceptions import ClientError
 import json
 
-BUCKET_NAME = 'll-now-material'
-BUCKET_KEY = 'tmp/stored_tweets.json'
+bucket_name_prod = 'll-now-material'
+bucket_name_dev = 'll-now-material-dev'
+bucket_key = 'tmp/stored_tweets.json'
 
 
-def fetch_stored_tweets():
+def fetch_stored_tweets(mode):
     s3 = boto3.resource('s3')
-    bucket = s3.Bucket(BUCKET_NAME)
-    obj = bucket.Object(BUCKET_KEY)
+    if mode == 'dev':
+        bucket_name = bucket_name_dev
+    else:
+        bucket_name = bucket_name_prod
+    bucket = s3.Bucket(bucket_name)
+    obj = bucket.Object(bucket_key)
     try:
         response = obj.get()
     except ClientError:
