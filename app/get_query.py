@@ -31,7 +31,10 @@ def get_query():
     # 生誕祭ハッシュタグを取得
     bd_hashtag = generate_bd_hashtag()
 
-    keywords = default_keywords + [bd_hashtag] + option_keywords
+    if bd_hashtag:
+        keywords = default_keywords + [bd_hashtag] + option_keywords
+    else:
+        keywords = default_keywords + option_keywords
     print('keywords:{}'.format(keywords))
 
     # 検索フィルターを取得
