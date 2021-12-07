@@ -17,10 +17,11 @@ def fetch_stored_tweets(mode):
     obj = bucket.Object(bucket_key)
     try:
         response = obj.get()
-    except ClientError:
+    except ClientError as e:
         # stored_tweets.jsonがs3に存在しない場合
+        print(e)
         return None
     body = response['Body'].read()
-    tweets = json.loads(body.decode('utf-8'))
+    tweets = json.loads(body.decode('utf-8'))['statuses']  # search_metadataは取得せず，statusesだけ取得する
 
     return tweets
