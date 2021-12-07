@@ -71,7 +71,13 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force, mode):
             if check_valid_tweet(tweet, invalid_tweet_including, invalid_users, invalid_source_list):
                 tweet = summarize_tweet(tweet)
                 tweets.append(tweet)
+
+        # メタデータを取得
         search_metadata = res['search_metadata']
+        # 崩れるので上書き
+        search_metadata['query'] = query
+
+        # 次のapiで使うparamsを整形
         next_results = search_metadata['next_results']
         since_id = search_metadata['since_id']
         next_results = next_results.lstrip('?')  # 先頭の?を削除
@@ -94,4 +100,4 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force, mode):
         next_since_id = latest_tweet['id_str']
         update_since_id(next_since_id, mode)
 
-    return tweets
+    return tweets, search_metadata
