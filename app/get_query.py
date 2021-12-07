@@ -1,6 +1,7 @@
 import boto3
 from boto3.dynamodb.conditions import Key
 from check_datetime_in_range import *
+from generate_bd_hashtag import *
 
 
 def get_query():
@@ -27,7 +28,13 @@ def get_query():
         if check_datetime_in_range(since_str, until_str):
             option_keywords.append(kw)
 
-    keywords = default_keywords + option_keywords
+    # 生誕祭ハッシュタグを取得
+    bd_hashtag = generate_bd_hashtag()
+
+    if bd_hashtag:
+        keywords = default_keywords + [bd_hashtag] + option_keywords
+    else:
+        keywords = default_keywords + option_keywords
     print('keywords:{}'.format(keywords))
 
     # 検索フィルターを取得

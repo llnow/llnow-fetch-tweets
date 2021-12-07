@@ -22,7 +22,7 @@ def put_tweets(tweets, flag_trigger_next_process, mode):
         put_tweets_to_bucket(tweets, flag_trigger_next_process, 'dev')
 
 
-def put_tweets_to_bucket(tweets, flag_trigger_next_process, mode):
+def put_tweets_to_bucket(res, flag_trigger_next_process, mode):
     if mode == 'dev':
         bucket_name = bucket_name_dev
     else:
@@ -30,19 +30,19 @@ def put_tweets_to_bucket(tweets, flag_trigger_next_process, mode):
     bucket = s3.Bucket(bucket_name)
     tweets_path = '/tmp/tweets.json'
     with open(tweets_path, 'w') as f:
-        json.dump(tweets, f, indent=4, ensure_ascii=False)
+        json.dump(res, f, indent=4, ensure_ascii=False)
     # 次の処理を呼び出す場合
     if flag_trigger_next_process:
         # 不要なstored_tweetsを削除
         try:
             s3_client.delete_object(Bucket=bucket_name, Key='tmp/stored_tweets.json')
-        except ClientError:
+        except ClientError as e:
             # stored_tweets.jsonがs3に存在しない場合は何もしない
-            pass
+            print(e)
 
         if mode == 'prod':
             # ツイートをアーカイブとしてs3に格納
-            filename = generate_archive_filename(tweets)
+            filename = generate_archive_filename(res['statuses'])
             bucket.upload_file(tweets_path, 'archive/{}'.format(filename))
 
         # 次の処理のトリガーとしてs3に格納
