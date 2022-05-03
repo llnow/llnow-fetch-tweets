@@ -13,8 +13,13 @@ def generate_bd_hashtag():
         FilterExpression=Attr('birthmonth').eq(month) & Attr('birthday').eq(day)
     )
     if res['Items']:
-        birthday_character = res['Items'][0]['full_name']
-        bd_hashtag = '#{}生誕祭{}'.format(birthday_character, year)
+        birthday_character = res['Items'][0]
+        search_birthday_hashtag_on_birthday = birthday_character['search_birthday_hashtag_on_birthday']
+        if search_birthday_hashtag_on_birthday:
+            birthday_character_full_name = res['Items'][0]['full_name']
+            bd_hashtag = '#{}生誕祭{}'.format(birthday_character_full_name, year)
+        else:
+            bd_hashtag = ''
     else:
         bd_hashtag = ''
 
