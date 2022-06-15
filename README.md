@@ -9,6 +9,10 @@ Twitter BOT [LL Now](https://twitter.com/LLNow_jp) のツイート取得部分
 
 [#lovelive](https://twitter.com/hashtag/lovelive)を含む日本語ツイートを収集・可視化するTwitter BOT
 
+### System Overview
+
+![system_overview](https://github.com/yasurona/ll-now-fetch-tweet/blob/master/docs/img/system_overview.png "System overview of LL Now")
+
 プロジェクトは次の4つのリポジトリに分かれている
 * [ll-now-fetch-tweet](https://github.com/yasurona/ll-now-fetch-tweet)
 * [ll-now-extract-words](https://github.com/yasurona/ll-now-extract-words)
