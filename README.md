@@ -1,4 +1,5 @@
 # ll-now-fetch-tweet
+
 Twitter BOT [LL Now](https://twitter.com/LLNow_jp) のツイート取得部分
 
 ## About LL Now
@@ -14,10 +15,11 @@ Twitter BOT [LL Now](https://twitter.com/LLNow_jp) のツイート取得部分
 ![system_overview](https://github.com/yasurona/ll-now-fetch-tweet/blob/master/docs/img/system_overview.png "System overview of LL Now")
 
 プロジェクトは次の4つのリポジトリに分かれている
-* [ll-now-fetch-tweet](https://github.com/yasurona/ll-now-fetch-tweet)
-* [ll-now-extract-words](https://github.com/yasurona/ll-now-extract-words)
-* [ll-now-generate-image](https://github.com/yasurona/ll-now-generate-image)
-* [ll-now-post-tweet](https://github.com/yasurona/ll-now-post-tweet)
+- [ll-now-fetch-tweet](https://github.com/yasurona/ll-now-fetch-tweet)
+- [ll-now-extract-words](https://github.com/yasurona/ll-now-extract-words)
+- [ll-now-generate-image](https://github.com/yasurona/ll-now-generate-image)
+- [ll-now-post-tweet](https://github.com/yasurona/ll-now-post-tweet)
 
 ## License
-[MIT](https://github.com/sy-app/ll-now-fetch-tweet/blob/master/LICENSE)
+
+[MIT](https://github.com/yasurona/ll-now-fetch-tweet/blob/master/LICENSE)
