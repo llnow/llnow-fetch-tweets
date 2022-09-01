@@ -49,6 +49,7 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force, mode):
     max_api_request = min(max_api_request_real, max_api_request_force)
 
     tweets = []
+    search_metadata = None
     for req in range(max_api_request):
         if req != 0 and req % 10 == 0:
             print('{} requested'.format(req))
