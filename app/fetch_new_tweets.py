@@ -68,7 +68,7 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force, mode):
         )
         fetched_tweets = res['statuses']
         if len(fetched_tweets) == 0:
-            sys.exit('Fetched 0 Tweets')
+            break
         for tweet in fetched_tweets:
             if check_valid_tweet(tweet, invalid_tweet_including, invalid_users, invalid_source_list):
                 tweet = summarize_tweet(tweet)
@@ -91,15 +91,13 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force, mode):
         params['tweet_mode'] = 'extended'
 
     if len(tweets) == 0:
-        latest_tweet = None
-        print('Fetched 0 new Tweet')
+        sys.exit('Fetched 0 new Tweet')
     else:
-        latest_tweet = tweets[0]
         print('Fetched {} new Tweets'.format(len(tweets)))
 
     # since_idを更新
-    if latest_tweet is not None:
-        next_since_id = latest_tweet['id_str']
-        update_since_id(next_since_id, mode)
+    latest_tweet = tweets[0]
+    next_since_id = latest_tweet['id_str']
+    update_since_id(next_since_id, mode)
 
     return tweets, search_metadata
