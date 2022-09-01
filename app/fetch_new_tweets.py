@@ -1,3 +1,6 @@
+import sys
+import time
+import boto3
 from get_since_id import *
 from get_query import *
 from get_api_req_limit import *
@@ -5,8 +8,6 @@ from check_valid_tweet import *
 from summarize_tweet import *
 from parse2params import *
 from update_since_id import *
-import time
-import boto3
 
 
 def fetch_new_tweets(twitter, sleep_sec, max_api_request_force, mode):
@@ -49,6 +50,7 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force, mode):
     max_api_request = min(max_api_request_real, max_api_request_force)
 
     tweets = []
+    search_metadata = None
     for req in range(max_api_request):
         if req != 0 and req % 10 == 0:
             print('{} requested'.format(req))
@@ -66,7 +68,7 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force, mode):
         )
         fetched_tweets = res['statuses']
         if len(fetched_tweets) == 0:
-            break
+            sys.exit('Fetched 0 Tweets')
         for tweet in fetched_tweets:
             if check_valid_tweet(tweet, invalid_tweet_including, invalid_users, invalid_source_list):
                 tweet = summarize_tweet(tweet)
