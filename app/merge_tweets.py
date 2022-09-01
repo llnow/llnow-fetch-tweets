@@ -22,9 +22,9 @@ def merge_tweets(stored_tweets, new_tweets, search_metadata, n_required_tweets, 
 
     print('{} Tweets are waiting to be processed'.format(len(tweets)))
     if flag_trigger_next_process:
-        print('Invoked next process')
+        print('Invoke next process')
     else:
-        print("Didn't invoke next process")
+        print("Don't invoke next process")
 
     # ツイートにメタデータを結合し，s3に出力する形に整形
     res = form_res(tweets, search_metadata)
