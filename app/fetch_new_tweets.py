@@ -92,9 +92,10 @@ def fetch_new_tweets(twitter, sleep_sec, max_api_request_force, mode):
     print('Fetched {} new Tweets'.format(len(tweets)))
     flag_fetched_0_new_tweet = (len(tweets) == 0)
 
-    # since_idを更新
-    latest_tweet = tweets[0]
-    next_since_id = latest_tweet['id_str']
-    update_since_id(next_since_id, mode)
+    if not flag_fetched_0_new_tweet:
+        # since_idを更新
+        latest_tweet = tweets[0]
+        next_since_id = latest_tweet['id_str']
+        update_since_id(next_since_id, mode)
 
     return tweets, search_metadata, flag_fetched_0_new_tweet
