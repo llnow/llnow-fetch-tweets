@@ -26,12 +26,12 @@ def check_valid_tweet(tweet, invalid_tweet_including, invalid_users, invalid_sou
     if source_url in invalid_source_list:
         flag_valid_source = False
 
-    # ハッシュタグの数が閾値より多いツイートを無効とみなす
+    # ハッシュタグの数が閾値以上のツイートを無効とみなす
     n_hashtags = len(hashtags)
-    if n_hashtags <= 7:
-        flag_valid_hashtags = True
-    else:
+    if n_hashtags >= 7:
         flag_valid_hashtags = False
+    else:
+        flag_valid_hashtags = True
 
     flag_valid_tweet = flag_valid_text and flag_valid_user and flag_valid_source and flag_valid_hashtags
 
